@@ -4,13 +4,26 @@
 - Install using convenience script as given in https://docs.docker.com/engine/install/ubuntu/
 - Remove the need to use sudo everytime you want to run docker by following https://docs.docker.com/engine/install/linux-postinstall/
 
+**References:**
+
+1) https://docs.docker.com/engine/install/ubuntu/
+2) https://docs.docker.com/engine/install/linux-postinstall/
+
+
 ## Basic setup
 
 ## Machine Learning Development Work - Nvidia Docker
 
-- Install nvidia-container toolkit
+
+
+- Install nvidia-container toolkit as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+- Run sample workload as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
 - Install Pytorch
 
+**Reference:**
+
+1) https://github.com/NVIDIA/nvidia-container-toolkit
+2) https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
 
 ## Robotics work - ROS Docker
 
