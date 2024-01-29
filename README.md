@@ -2,12 +2,10 @@
 
 ## Docker Hello-World
 - Install using convenience script as given in https://docs.docker.com/engine/install/ubuntu/
-- Remove the need to use sudo everytime you want to run docker by following https://docs.docker.com/engine/install/linux-postinstall/
 
 **References:**
 
 1) https://docs.docker.com/engine/install/ubuntu/
-2) https://docs.docker.com/engine/install/linux-postinstall/
 
 
 ## Basic setup
