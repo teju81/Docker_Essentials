@@ -17,6 +17,17 @@
 - Install nvidia-container toolkit as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 - Run sample workload as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
 - Install Pytorch image from docker hub ``docker pull pytorch/pytorch:latest``
+- Run a pytorch container by running the command ``sudo docker run --rm -it --runtime=nvidia --gpus all pytorch/pytorch:latest bash``
+- Check that the gpu is accessible from within the container if by running the commands in a python3 environment
+  ```
+  import torch
+  torch.cuda_is_available()
+  ```
+  the program returns ``true``.
+
+  
+  
+
 
 **Reference:**
 
