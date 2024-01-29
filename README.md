@@ -18,7 +18,7 @@
 
 - Install nvidia-container toolkit as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 - Run sample workload as given in https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
-- Install Pytorch
+- Install Pytorch image from docker hub ``docker pull pytorch/pytorch:latest``
 
 **Reference:**
 
