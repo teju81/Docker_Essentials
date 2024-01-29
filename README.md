@@ -23,9 +23,7 @@
   import torch
   torch.cuda_is_available()
   ```
-  the program returns ``true``.
-
-  
+  the program should return ``true``.
   
 
 
