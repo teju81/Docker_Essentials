@@ -12,7 +12,7 @@
 
 ## Basic setup
 
-## Machine Learning Development Work - Nvidia Docker
+### Machine Learning Development Work - Nvidia Docker
 
 
 
@@ -25,7 +25,7 @@
 1) https://github.com/NVIDIA/nvidia-container-toolkit
 2) https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
 
-## Robotics work - ROS Docker
+### Robotics work - ROS Docker
 
 - ROS1
 - ROS2
