@@ -61,7 +61,42 @@
 - The display related tags need to be specified with the ``docker run`` command. The display will work for all other terminals associated with the container. No need to explicitly type the display related tags in the ``docker exec`` command again.
 
 
+
+## Custom Dockerfile
+
+Most times the docker images one works with doesn't have everything we need. Consider using this dockerfile as a template for your work. it has the following features.
+
+```
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+RUN apt-get update && apt-get install -y \
+	mlocate \
+	gedit \
+	git \
+  wget
+
+
+
+# Install Sublime text
+RUN wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+RUN echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
+RUN apt-get update
+RUN apt-get install sublime-text
+
+
+
+```
+
+- Non-interactive user : some packages require user input beyond (y/n) which we see in apt installs. Line XX builds the image without the user input.
+- 
+
 ## References
 
 1. Docker Mumshad Mannambeth - https://kodekloud.com/wp-content/uploads/2020/06/Docker-for-Beginners-Mumshad-Mannambeth.pdf
 2. Docker for Beginners (FreeCodeCamp.org Youtube Channel)- https://www.youtube.com/watch?v=fqMOX6JJhGo&t=10s&ab_channel=freeCodeCamp.org
+3. https://www.sublimetext.com/docs/linux_repositories.html
+4. https://github.com/TerminalFi/LSP-copilot?tab=readme-ov-file
+5. https://forum.sublimetext.com/t/github-copilot-for-sublime-text-4-is-coming/64449/3
+6. https://packagecontrol.io/packages/LSP
+7. https://packagecontrol.io/packages/LSP-copilot
