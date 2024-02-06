@@ -34,6 +34,7 @@
 
 1) https://github.com/NVIDIA/nvidia-container-toolkit
 2) https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/sample-workload.html
+3) https://docs.docker.com/config/containers/resource_constraints/#gpu
 
 ### Robotics work - ROS Docker
 
