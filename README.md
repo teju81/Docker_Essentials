@@ -63,6 +63,7 @@
 **Note:**
 - Bash after the container name in ``docker run`` or ``docker exec`` commands will override the CMD defined in the dockerfile of the given image
 - The display related tags need to be specified with the ``docker run`` command. The display will work for all other terminals associated with the container. No need to explicitly type the display related tags in the ``docker exec`` command again.
+- The ``--privileged`` tag in ``docker run`` command shares all devices to the docker container. This tag is convenient to use when you wish to grab images from a usb webcam or a microphone from a docker container. Without this tag you will need to use the ``--device`` tag, but the command to run in that case will be a lot more verbose and complex.
 
 
 
