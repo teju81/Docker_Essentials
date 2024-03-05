@@ -51,6 +51,9 @@
 
 ```docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix <docker_image_name> bash```
 
+- In another terminal one needs to run ``xhost +local:root`` in order to enable GUI with Docker
+- Be sure to run ``xhost -local:root`` once you close the docker container
+
 **Docker with both Display/GUI and Audio**
 
 ```docker run -it --rm --network=host -e ROS_IP=<ROS_IP> -e ROS_MASTER_URI=<ROS_MASTER_URI> -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device /dev/snd -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native -v ~/.config/pulse/cookie:/root/.config/pulse/cookie <docker_image_name> bash```
