@@ -98,7 +98,13 @@ RUN apt-get install sublime-text
 ```
 
 - Non-interactive user : some packages require user input beyond (y/n) which we see in apt installs. Line XX builds the image without the user input.
-- 
+
+## Typical Docker Errors
+**failed to register layer: Error processing tar file(exit status 1): archive/tar: invalid tar header**
+- Change the default data directory for docker to another location where sufficient space exists [8]
+- Update /etc/docker/daemon.json by adding ``"data-root": "/home/raviteja/docker_data",``
+- start and stop docker service using systemctl ``sudo systemctl stop docker`` and ``sudo systemctl start docker``
+
 
 ## References
 
@@ -109,3 +115,4 @@ RUN apt-get install sublime-text
 5. https://forum.sublimetext.com/t/github-copilot-for-sublime-text-4-is-coming/64449/3
 6. https://packagecontrol.io/packages/LSP
 7. https://packagecontrol.io/packages/LSP-copilot
+8. https://unix.stackexchange.com/questions/571899/docker-failed-to-register-layer-error-processing-tar-fileexit-status-1-no-s
