@@ -1,6 +1,7 @@
 sudo apt update -y
 sudo apt upgrade -y
 sudo apt install software-properties-common -y
+sudo apt install build-essential
 sudo apt install mlocate -y
 sudo apt-get update -y
 sudo apt-get install curl -y
