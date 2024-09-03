@@ -70,4 +70,5 @@ RUN pip install setuptools==58.2.0
 RUN apt install python-is-python3
 RUN apt remove python3-matplotlib -y
 RUN echo "alias python=python3" >> ~/.bashrc
+COPY requirements.txt /requirements.txt
 WORKDIR /monogs_ros_ws/
