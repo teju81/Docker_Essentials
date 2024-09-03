@@ -4,7 +4,7 @@
 
 - Install using convenience script as given in https://docs.docker.com/engine/install/ubuntu/
 - In order to check that docker is installed correctly run the command ``sudo docker run hello-world``. You should get some output printed on the screen along with a hello-world message.
-- In order to avoid running docker with the sudo command all the time, we can configure docker to run in non-root mode. Run the following command ``sudo usermod -aG docker $USER`` and reboot your computer. After restarting the computer you should be able to run docker in non-root mode.
+- In order to avoid running docker with the sudo command all the time, we can configure docker to run in non-root mode. Run the following command ``sudo usermod -aG docker $USER`` and reboot your computer. After restarting the computer you should be able to run docker in non-root mode. One can also run the command ``newgrp docker`` instead of rebooting the computer.
 
 **References:**
 
