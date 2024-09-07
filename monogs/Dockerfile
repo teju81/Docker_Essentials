@@ -30,6 +30,10 @@ RUN apt install gedit -y
 RUN apt-get update -y && apt-get upgrade -y
 
 RUN pip install --upgrade pip
+
+##################################################
+# Step 4: Install python packages for monogs
+##################################################
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 RUN pip install --upgrade --force-reinstall --ignore-installed blinker
 RUN pip install open3d
@@ -54,7 +58,9 @@ RUN apt install python3-tk -y
 RUN pip install lpips
 RUN pip install ruff
 RUN pip install tqdm
-
+RUN pip install pyrealsense2
+#RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
+#RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
 
 ##################################################
 # Step 6: Install ROS2
@@ -70,5 +76,14 @@ RUN pip install setuptools==58.2.0
 RUN apt install python-is-python3
 RUN apt remove python3-matplotlib -y
 RUN echo "alias python=python3" >> ~/.bashrc
-COPY requirements.txt /requirements.txt
-WORKDIR /monogs_ros_ws/
+
+##################################################
+# Step 6: Install PyDboW3
+##################################################
+
+RUN git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
+COPY install_script.sh install_script.sh
+COPY requirements.txt requirements.txt
+RUN chmod +x install_script.sh
+WORKDIR /monogs_ros_ws
+ENTRYPOINT ["/bin/bash", "-c", "/install_script.sh && exec /bin/bash"]
