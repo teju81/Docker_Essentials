@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Running install_script.sh inside the container"
+pip install -r /requirements.txt
