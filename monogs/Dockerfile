@@ -59,6 +59,7 @@ RUN pip install lpips
 RUN pip install ruff
 RUN pip install tqdm
 RUN pip install pyrealsense2
+# Your GPU's compute capability (a number) must be past of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
 RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
 RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
