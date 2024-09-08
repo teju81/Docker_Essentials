@@ -59,11 +59,12 @@ RUN pip install lpips
 RUN pip install ruff
 RUN pip install tqdm
 RUN pip install pyrealsense2
-#RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
-#RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
+ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
+RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
+RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
 
 ##################################################
-# Step 6: Install ROS2
+# Step 5: Install ROS2
 ##################################################
 
 RUN locale && apt update && apt install locales && locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && export LANG=en_US.UTF-8 && locale
@@ -82,8 +83,4 @@ RUN echo "alias python=python3" >> ~/.bashrc
 ##################################################
 
 RUN git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
-COPY install_script.sh install_script.sh
-COPY requirements.txt requirements.txt
-RUN chmod +x install_script.sh
 WORKDIR /monogs_ros_ws
-ENTRYPOINT ["/bin/bash", "-c", "/install_script.sh && exec /bin/bash"]
