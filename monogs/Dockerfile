@@ -59,7 +59,8 @@ RUN pip install lpips
 RUN pip install ruff
 RUN pip install tqdm
 RUN pip install pyrealsense2
-# Your GPU's compute capability (a number) must be past of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
+
+# Your GPU's compute capability (a number) must be part of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
 RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
 RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
@@ -74,14 +75,17 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 RUN apt update && apt upgrade -y && apt install ros-humble-desktop -y && apt install ros-dev-tools -y
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
-RUN pip install setuptools==58.2.0
-RUN apt install python-is-python3
-RUN apt remove python3-matplotlib -y
-RUN echo "alias python=python3" >> ~/.bashrc
 
 ##################################################
 # Step 6: Install PyDboW3
 ##################################################
 
 RUN git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
+
+
+RUN pip install setuptools==58.2.0
+RUN apt install python-is-python3
+RUN apt remove python3-matplotlib -y
+RUN echo "alias python=python3" >> ~/.bashrc
+
 WORKDIR /monogs_ros_ws
