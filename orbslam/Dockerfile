@@ -94,7 +94,27 @@ RUN apt-get install librealsense2-dev -y
 RUN apt-get install librealsense2-dbg -y
 
 ##################################################
-# Step 7: Build ORBSLAM3 and its dependencies
+# Step 9: Install VSCODE
+##################################################
+
+RUN wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/4849ca9bdf9666755eb463db297b69e5385090e3/code_1.93.0-1725459079_amd64.deb
+RUN apt install ./code_1.93.0-1725459079_amd64.deb -y && echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+RUN apt-get install wget gpg -y
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+RUN  install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+RUN echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+RUN rm -f packages.microsoft.gpg
+RUN apt update && apt install apt-transport-https && apt update
+RUN apt install code -y
+
+##################################################
+# Step 10: Install Doxygen
+##################################################
+
+RUN apt update -y && apt install doxygen -y && apt install graphviz -y && apt install firefox -y
+
+##################################################
+# Step 11: Build ORBSLAM3 and its dependencies
 ##################################################
 RUN mkdir -p ~/code/orbslam && cd ~/code/orbslam && git clone https://github.com/teju81/ORB_SLAM3.git . && git checkout c++14_comp && chmod +x build.sh && mkdir -p ~/code/orbslam/Thirdparty/Pangolin
 RUN cd ~/code/orbslam/Thirdparty/Pangolin && git clone --recursive https://github.com/stevenlovegrove/Pangolin.git .
@@ -102,3 +122,8 @@ COPY install_prerequisites.sh /root/code/orbslam/Thirdparty/Pangolin/scripts/.
 RUN cd ~/code/orbslam/Thirdparty/Pangolin && chmod +x scripts/install_prerequisites.sh && ./scripts/install_prerequisites.sh -v -m apt required && cmake -B build && cmake --build build
 RUN cd ~/code/orbslam/Thirdparty/Pangolin/build && ctest
 RUN cd ~/code/orbslam && ./build.sh
+
+COPY run_orbslam.sh /root/code/orbslam/run_orbslam.sh
+RUN chmod +x /root/code/orbslam/run_orbslam.sh
+
+WORKDIR /root/code/orbslam
