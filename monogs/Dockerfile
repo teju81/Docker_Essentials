@@ -62,8 +62,9 @@ RUN pip install pyrealsense2
 
 # Your GPU's compute capability (a number) must be part of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
-RUN git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
-RUN git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
+RUN mkdir -p /root/code && cd /root/code && git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
+RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
+RUN mkdir -p /root/code/monogs_ros_ws/src && cd /root/code/monogs_ros_ws/src && git clone https://github.com/teju81/MonoGS.git . && git checkout multicam_ros2
 
 ##################################################
 # Step 5: Install ROS2
@@ -80,12 +81,41 @@ RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 # Step 6: Install PyDboW3
 ##################################################
 
-RUN git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
+RUN cd /root/code && git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
 
+
+##################################################
+# Step 7: 
+##################################################
 
 RUN pip install setuptools==58.2.0
 RUN apt install python-is-python3
 RUN apt remove python3-matplotlib -y
 RUN echo "alias python=python3" >> ~/.bashrc
 
-WORKDIR /monogs_ros_ws
+##################################################
+# Step 8: Install VSCODE
+##################################################
+
+RUN wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/4849ca9bdf9666755eb463db297b69e5385090e3/code_1.93.0-1725459079_amd64.deb
+RUN apt install ./code_1.93.0-1725459079_amd64.deb -y && echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+RUN apt-get install wget gpg -y
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+RUN  install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+RUN echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+RUN rm -f packages.microsoft.gpg
+RUN apt update && apt install apt-transport-https && apt update
+RUN apt install code -y
+
+##################################################
+# Step 9: Install TMUX
+##################################################
+COPY launch_monogs_ros.sh /root/code/monogs_ros_ws/launch_monogs_ros.sh
+RUN apt update -y && apt install tmux -y
+RUN chmod +x /root/code/monogs_ros_ws/launch_monogs_ros.sh
+RUN cd /root/code/monogs_ros_ws/src && git pull
+COPY launch_backend_ros.sh /root/code/monogs_ros_ws/launch_backend_ros.sh
+COPY launch_frontend_ros.sh /root/code/monogs_ros_ws/launch_frontend_ros.sh
+COPY launch_gui_ros.sh /root/code/monogs_ros_ws/launch_gui_ros.sh
+RUN chmod +x /root/code/monogs_ros_ws/launch_frontend_ros.sh /root/code/monogs_ros_ws/launch_backend_ros.sh /root/code/monogs_ros_ws/launch_gui_ros.sh
+WORKDIR /root/code/monogs_ros_ws

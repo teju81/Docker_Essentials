@@ -8,7 +8,8 @@ image_name=${2:-monogs_docker}
 # Allow X server connection
 xhost +local:root
 docker rm $container_name
-docker run -it --volume="/home/raviteja/code/monogs_ros_ws/:/monogs_ros_ws/" --volume="/home/raviteja/code/datasets/:/datasets" --env="NVIDIA_VISIBLE_DEVICES=all" --env="NVIDIA_DRIVER_CAPABILITIES=all" \
+# --volume="/home/raviteja/code/monogs_ros_ws/:/monogs_ros_ws/"
+docker run -it --volume="/home/raviteja/code/datasets/:/root/code/datasets" --env="NVIDIA_VISIBLE_DEVICES=all" --env="NVIDIA_DRIVER_CAPABILITIES=all" \
     --net=host \
     --ipc=host\
     --privileged \
