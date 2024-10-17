@@ -110,12 +110,9 @@ RUN apt install code -y
 ##################################################
 # Step 9: Install TMUX
 ##################################################
-COPY launch_monogs_ros.sh /root/code/monogs_ros_ws/launch_monogs_ros.sh
 RUN apt update -y && apt install tmux -y
-RUN chmod +x /root/code/monogs_ros_ws/launch_monogs_ros.sh
+RUN echo "set -g mouse on" > ~/.tmux.conf
+
+
 RUN cd /root/code/monogs_ros_ws/src && git pull
-COPY launch_backend_ros.sh /root/code/monogs_ros_ws/launch_backend_ros.sh
-COPY launch_frontend_ros.sh /root/code/monogs_ros_ws/launch_frontend_ros.sh
-COPY launch_gui_ros.sh /root/code/monogs_ros_ws/launch_gui_ros.sh
-RUN chmod +x /root/code/monogs_ros_ws/launch_frontend_ros.sh /root/code/monogs_ros_ws/launch_backend_ros.sh /root/code/monogs_ros_ws/launch_gui_ros.sh
 WORKDIR /root/code/monogs_ros_ws
