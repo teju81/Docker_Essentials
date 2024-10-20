@@ -9,7 +9,7 @@ image_name=${2:-loopsplat_docker}
 xhost +local:root
 docker rm $container_name
 # --volume="/home/raviteja/code/monogs_ros_ws/:/monogs_ros_ws/"
-docker run -it --volume="/home/raviteja/code/datasets/:/root/code/datasets" --env="NVIDIA_VISIBLE_DEVICES=all" --env="NVIDIA_DRIVER_CAPABILITIES=all" \
+docker run -it --volume="/home/raviteja/code/datasets/:/root/code/datasets" --volume="/home/raviteja/code/output/:/root/code/output" --env="NVIDIA_VISIBLE_DEVICES=all" --env="NVIDIA_DRIVER_CAPABILITIES=all" \
     --net=host \
     --ipc=host\
     --privileged \
