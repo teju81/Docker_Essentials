@@ -32,23 +32,6 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN pip install --upgrade pip
 
 
-RUN apt-get update && apt-get install -y \
-    libxkbcommon-x11-0 \
-    libxcb-xinerama0 \
-    libxcb-xinerama0-dev \
-    libxcb-icccm4 \
-    libxcb-icccm4-dev \
-    libxcb-image0 \
-    libxcb-image0-dev \
-    libxcb-keysyms1 \
-    libxcb-keysyms1-dev \
-    libxcb-render-util0 \
-    libxcb-render-util0-dev \
-    libxcb-randr0 \
-    libxcb-randr0-dev \
-    libxcb-xkb-dev \
-    libx11-xcb-dev
-
 ##################################################
 # Step 4: Install python packages for monogs
 ##################################################
@@ -66,7 +49,7 @@ RUN pip install wandb
 RUN pip install roma
 RUN pip install imgviz
 RUN pip install einops
-RUN pip install PyQt5
+#RUN pip install PyQt5
 RUN pip install python-pycg
 RUN pip install evo
 RUN apt install python3-tk -y
@@ -87,7 +70,37 @@ RUN cd /root/code && git clone https://github.com/eriksandstroem/evaluate_3d_rec
 RUN cd /root/code && git clone https://github.com/VladimirYugay/gaussian_rasterizer.git --recursive && cd gaussian_rasterizer && git checkout 9c40173 && pip install .
 RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
 RUN cd /root/code && git clone https://github.com/cvg/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && git checkout 41860cf && pip install .
-RUN mkdir -p /root/code/LoopSplat && cd /root/code/LoopSplat && git clone https://github.com/teju81/LoopSplat.git .
+RUN mkdir -p /root/code/loopsplat_ros_ws/src && cd /root/code/loopsplat_ros_ws/src && git clone https://github.com/teju81/LoopSplat.git . && git checkout ros2
+
+
+##################################################
+# Step 5: Install ROS2
+##################################################
+
+RUN locale && apt update && apt install locales && locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && export LANG=en_US.UTF-8 && locale
+RUN add-apt-repository universe && apt update && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+RUN apt update && apt upgrade -y && apt install ros-humble-ros-base -y && apt install ros-dev-tools -y
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+
+
+RUN apt-get update && apt-get install -y \
+    libxkbcommon-x11-0 \
+    libxcb-xinerama0 \
+    libxcb-xinerama0-dev \
+    libxcb-icccm4 \
+    libxcb-icccm4-dev \
+    libxcb-image0 \
+    libxcb-image0-dev \
+    libxcb-keysyms1 \
+    libxcb-keysyms1-dev \
+    libxcb-render-util0 \
+    libxcb-render-util0-dev \
+    libxcb-randr0 \
+    libxcb-randr0-dev \
+    libxcb-xkb-dev \
+    libx11-xcb-dev
+
 
 ##################################################
 # Step 7: 
@@ -104,4 +117,4 @@ RUN echo "alias python=python3" >> ~/.bashrc
 RUN apt update -y && apt install tmux -y
 RUN echo "set -g mouse on" > ~/.tmux.conf
 
-WORKDIR /root/code/LoopSplat
+WORKDIR /root/code/loopsplat_ros_ws
