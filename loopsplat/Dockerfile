@@ -46,8 +46,11 @@ RUN pip install trimesh
 RUN pip install imageio
 RUN pip install plyfile
 RUN pip install wandb
+RUN pip install glfw
 RUN pip install roma
 RUN pip install imgviz
+RUN pip install PyOpenGL==3.1.6
+RUN pip install PyGLM
 RUN pip install einops
 #RUN pip install PyQt5
 RUN pip install python-pycg
@@ -62,6 +65,7 @@ RUN pip install ruff
 RUN pip install tqdm
 RUN pip install pyrealsense2
 RUN pip install "numpy<2"
+RUN pip install munch
 
 # Your GPU's compute capability (a number) must be part of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
@@ -109,6 +113,9 @@ RUN apt-get update && apt-get install -y \
 RUN pip install setuptools==58.2.0
 RUN apt install python-is-python3
 RUN apt remove python3-matplotlib -y
+RUN apt-get install xvfb -y
+RUN Xvfb :99 -screen 0 1024x768x24 &
+RUN export DISPLAY=:99
 RUN echo "alias python=python3" >> ~/.bashrc
 
 ##################################################
