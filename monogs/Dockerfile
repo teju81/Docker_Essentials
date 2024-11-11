@@ -64,7 +64,7 @@ RUN pip install pyrealsense2
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
 RUN mkdir -p /root/code && cd /root/code && git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
 RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
-RUN mkdir -p /root/code/monogs_ros_ws/src && cd /root/code/monogs_ros_ws/src && git clone https://github.com/teju81/MonoGS.git . && git checkout multicam_ros2
+RUN cd /root/code && git clone https://github.com/cvg/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && git checkout 41860cf && pip install .
 
 ##################################################
 # Step 5: Install ROS2
@@ -73,14 +73,15 @@ RUN mkdir -p /root/code/monogs_ros_ws/src && cd /root/code/monogs_ros_ws/src && 
 RUN locale && apt update && apt install locales && locale-gen en_US en_US.UTF-8 && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && export LANG=en_US.UTF-8 && locale
 RUN add-apt-repository universe && apt update && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-RUN apt update && apt upgrade -y && apt install ros-humble-desktop -y && apt install ros-dev-tools -y
+RUN apt update && apt upgrade -y && apt install ros-humble-ros-base -y && apt install ros-dev-tools -y
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
 
-##################################################
-# Step 6: Install PyDboW3
-##################################################
-
+# ##################################################
+# # Step 6: Install PyDboW3
+# ##################################################
+RUN apt-get update
+RUN apt-get install libopencv-dev -y
 RUN cd /root/code && git clone https://github.com/teju81/pydbow3.git --recursive && cd pydbow3/modules/dbow3 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd ../../.. && pip install .
 
 
@@ -113,6 +114,5 @@ RUN apt install code -y
 RUN apt update -y && apt install tmux -y
 RUN echo "set -g mouse on" > ~/.tmux.conf
 
-
-RUN cd /root/code/monogs_ros_ws/src && git pull
+RUN mkdir -p /root/code/monogs_ros_ws/src && cd /root/code/monogs_ros_ws/src && git clone https://github.com/teju81/MonoGS.git . && git checkout multicam_ros2
 WORKDIR /root/code/monogs_ros_ws
