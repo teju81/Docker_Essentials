@@ -57,7 +57,6 @@ RUN pip install python-pycg
 RUN pip install evo
 RUN apt install python3-tk -y
 RUN pip install torchmetrics
-RUN apt install python3-tk -y
 RUN pip install faiss-gpu
 RUN pip install pytorch-msssim
 RUN pip install lpips
@@ -74,7 +73,6 @@ RUN cd /root/code && git clone https://github.com/eriksandstroem/evaluate_3d_rec
 RUN cd /root/code && git clone https://github.com/VladimirYugay/gaussian_rasterizer.git --recursive && cd gaussian_rasterizer && git checkout 9c40173 && pip install .
 RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
 RUN cd /root/code && git clone https://github.com/cvg/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && git checkout 41860cf && pip install .
-RUN mkdir -p /root/code/loopsplat_ros_ws/src && cd /root/code/loopsplat_ros_ws/src && git clone https://github.com/teju81/LoopSplat.git . && git checkout ros2
 
 
 ##################################################
@@ -123,5 +121,8 @@ RUN echo "alias python=python3" >> ~/.bashrc
 ##################################################
 RUN apt update -y && apt install tmux -y
 RUN echo "set -g mouse on" > ~/.tmux.conf
-
+RUN mkdir -p /root/.cache/torch/hub/netvlad/
+RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-Pitts30K.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/Pitts30K_struct.mat
+RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-TokyoTM.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/TokyoTM_struct.mat
+RUN mkdir -p /root/code/loopsplat_ros_ws/src && cd /root/code/loopsplat_ros_ws/src && git clone https://github.com/teju81/LoopSplat.git . && git checkout multicam_ros2
 WORKDIR /root/code/loopsplat_ros_ws
