@@ -64,7 +64,7 @@ RUN pip install pyrealsense2
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
 RUN mkdir -p /root/code && cd /root/code && git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
 RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
-RUN cd /root/code && git clone https://github.com/cvg/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && git checkout 41860cf && pip install .
+RUN cd /root/code && git clone https://github.com/teju81/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && pip install .
 
 ##################################################
 # Step 5: Install ROS2
@@ -113,6 +113,8 @@ RUN apt install code -y
 ##################################################
 RUN apt update -y && apt install tmux -y
 RUN echo "set -g mouse on" > ~/.tmux.conf
-
+RUN mkdir -p /root/.cache/torch/hub/netvlad/
+RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-Pitts30K.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/Pitts30K_struct.mat
+RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-TokyoTM.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/TokyoTM_struct.mat
 RUN mkdir -p /root/code/monogs_ros_ws/src && cd /root/code/monogs_ros_ws/src && git clone https://github.com/teju81/MonoGS.git . && git checkout multicam_ros2
 WORKDIR /root/code/monogs_ros_ws
