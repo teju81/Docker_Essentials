@@ -72,7 +72,7 @@ RUN mkdir -p /root/code && cd /root/code && git clone https://github.com/Vladimi
 RUN cd /root/code && git clone https://github.com/eriksandstroem/evaluate_3d_reconstruction_lib.git --recursive && cd evaluate_3d_reconstruction_lib && git checkout 9b3cc08 && pip install .
 RUN cd /root/code && git clone https://github.com/VladimirYugay/gaussian_rasterizer.git --recursive && cd gaussian_rasterizer && git checkout 9c40173 && pip install .
 RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
-RUN cd /root/code && git clone https://github.com/cvg/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && git checkout 41860cf && pip install .
+RUN cd /root/code && git clone https://github.com/teju81/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && pip install .
 
 
 ##################################################
