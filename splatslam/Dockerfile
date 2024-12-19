@@ -87,18 +87,12 @@ RUN pip install "numpy<2"
 # Your GPU's compute capability (a number) must be part of the below list - to find that number for your gpu go to https://developer.nvidia.com/cuda-gpus
 ENV TORCH_CUDA_ARCH_LIST="6.0 7.0 7.5 8.0"
 RUN mkdir -p /root/code
-RUN cd /root/code && git clone https://github.com/facebookresearch/pytorch3d.git && cd pytorch3d && pip install -e .
-# RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
-# RUN cd /root/code && git clone https://github.com/VladimirYugay/simple-knn.git --recursive && cd simple-knn && git checkout c7e51a0 && pip install .
-# RUN cd /root/code && git clone https://github.com/VladimirYugay/gaussian_rasterizer.git --recursive && cd gaussian_rasterizer && git checkout 9c40173 && pip install .
-RUN cd /root/code && git clone https://github.com/teju81/RTG-SLAM-cuda_utils.git --recursive
-RUN cd /root/code/RTG-SLAM-cuda_utils/cuda_utils && pip install .
-RUN cd /root/code/RTG-SLAM-cuda_utils/simple-knn && pip install .
-RUN cd /root/code/RTG-SLAM-cuda_utils/diff-gaussian-rasterizer-depth && pip install .
+# RUN cd /root/code && git clone https://github.com/facebookresearch/pytorch3d.git && cd pytorch3d && pip install -e .
+RUN cd /root/code && git clone https://github.com/rmurai0610/diff-gaussian-rasterization-w-pose.git --recursive && cd diff-gaussian-rasterization-w-pose && git checkout 43e21bf && pip install .
 RUN cd /root/code && git clone https://github.com/eriksandstroem/evaluate_3d_reconstruction_lib.git --recursive && cd evaluate_3d_reconstruction_lib && git checkout 9b3cc08 && pip install .
+RUN cd /root/code && git clone https://github.com/camenduru/simple-knn.git --recursive && cd simple-knn && git checkout 44f7642 && pip install .
+RUN cd /root/code && git clone https://github.com/princeton-vl/lietorch.git --recursive && cd simple-knn && git checkout 0a9ce8 && pip install .
 RUN cd /root/code && git clone https://github.com/teju81/Hierarchical-Localization.git --recursive && cd Hierarchical-Localization && pip install .
-
-
 
 ##################################################
 # Step 5: Install ROS2
@@ -150,5 +144,5 @@ RUN echo "set -g mouse on" > ~/.tmux.conf
 RUN mkdir -p /root/.cache/torch/hub/netvlad/
 RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-Pitts30K.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/Pitts30K_struct.mat
 RUN wget -O /root/.cache/torch/hub/netvlad/VGG16-NetVLAD-TokyoTM.mat https://cvg-data.inf.ethz.ch/hloc/netvlad/TokyoTM_struct.mat
-RUN mkdir -p /root/code/rtgslam_ros_ws/src && cd /root/code/rtgslam_ros_ws/src && git clone https://github.com/teju81/RTG-SLAM.git . && git checkout multicam_ros2
-WORKDIR /root/code/rtgslam_ros_ws
+RUN mkdir -p /root/code/splatslam_ros_ws/src && cd /root/code/splatslam_ros_ws/src && git clone https://github.com/teju81/Splat-SLAM.git . && git checkout multicam_ros2
+WORKDIR /root/code/splatslam_ros_ws
